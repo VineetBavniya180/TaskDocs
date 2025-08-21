@@ -4,7 +4,7 @@
 
 
 ## Cluster Name Define 
-[![ cluster configure image](../ecsTask/img/2025-08-20_22-17.png)]
+![ cluster configure image](../ecsTask/img/2025-08-20_22-17.png)
 
 
 ## Infrastructure 
