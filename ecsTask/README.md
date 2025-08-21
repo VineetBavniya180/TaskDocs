@@ -36,15 +36,16 @@
 
 ![Task Definition ](../ecsTask/img/2025-08-21_14-19.png)
 
-```  
-"cpu": "512",
-"memory": "200",
-"runtimePlatform": {
-    "cpuArchitecture": "X86_64",
-    "operatingSystemFamily": "LINUX"
-}
+>```  
+>"cpu": "512",
+>"memory": "200",
+>"runtimePlatform": {
+>    "cpuArchitecture": "X86_64",
+>    "operatingSystemFamily": "LINUX"
+>}
+>
+>```
 
-```
 ## Create Service
 > select lounch type EC2, add networking setting default, add loadbalancer for access container
 
