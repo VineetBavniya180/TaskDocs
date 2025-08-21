@@ -4,12 +4,13 @@
 
 
 ## Cluster Name Define 
+
 ![ cluster configure image](../ecsTask/img/2025-08-20_22-17.png)
 
 
 ## Infrastructure 
 
-[![ Insrastructure image](../ecsTask/img/2025-08-20_22-23.png)]
+![ Insrastructure image](../ecsTask/img/2025-08-20_22-23.png)
 
 
 ## EC2 instance type
@@ -24,7 +25,7 @@
 > i face this issue also. so create a role first when you create ECS on EC2. 
 > Amazon ECS container instance IAM role [iam role for ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html) .
 
-[![image ](../ecsTask/img/2025-08-20_22-32.png)]
+![image ](../ecsTask/img/2025-08-20_22-32.png)
 
 ## Network settings for Amazon EC2 instances  Info
 > I took default setting.
@@ -33,7 +34,7 @@
 > create new task definition 
 > image : nginx, Port : 80
 
-[![Task Definition ](../ecsTask/img/2025-08-21_14-19.png)]
+![Task Definition ](../ecsTask/img/2025-08-21_14-19.png)
 
 ```  
 "cpu": "512",
