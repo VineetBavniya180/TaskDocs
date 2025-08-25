@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  name: testTask1
+  hello: hello from kubernetes
+  hey: Hey from ConfigMap
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: configmap-1

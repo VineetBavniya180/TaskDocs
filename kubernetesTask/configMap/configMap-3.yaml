@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  datafile: |-
+    hello="hello kubernetes"
+    hey="heyy"
+    how="how are you"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: configmap-3

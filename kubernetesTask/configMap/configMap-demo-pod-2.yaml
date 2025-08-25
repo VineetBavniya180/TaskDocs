@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-demo-pod-2
+spec:
+  containers:
+    - name: configmap-demo-container-2
+      image: nginx
+      ports:
+        - containerPort: 80
+      env:
+       - name: HELLO 
+         valueFrom:
+           configMapKeyRef:
+             name: configmap-1
+             key: hello
