@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prac-ingress
+
+spec:
+  rules:
+    - host: prac.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /sample-1
+            backend:
+              service:
+                name: sample-1
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: /sample-2
+            backend:
+              service:
+                name: sample-2
+                port:
+                  number: 3000
+    - host: sample-1.prac.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: sample-3
+                port:
+                  number: 3000
+    - host: sample-2.prac.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: sample-4
+                port:
+                  number: 3000
