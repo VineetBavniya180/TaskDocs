@@ -55,15 +55,73 @@ kubectl get pv,pvc,pod
 * I Used AWS EBS storage.          
 * create secret and store accessKey and secretKey in secret . [secretforaws.yaml](./secretforaws.yaml)      
 
-```
-kubectl apply -f secretforaws.yaml
-kubectl get secret
-```
+<hr>
 
-![OutpUt](./img/2025-08-26_16-14.png)
-
-* install aws-ebs-csi-driver on cluster.
+* install aws-ebs-csi-driver on cluster. 
 * i used docs to install aws-ebs-csi-driver [docslink](https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/docs/install.md).
+
+
+### Issue I face 
+* when i create pod. it's status showing me pending. 
+
+## ✅ Fix: Give IAM permissions to the EBS CSI driver
+In EKS, you must use IAM Roles for Service Accounts (IRSA) for CSI drivers.
+* ### 1️⃣ Check if IRSA is enabled on your cluster
+```
+eksctl utils associate-iam-oidc-provider --cluster demoCluster --region us-east-1 --approve
+```
+* ### 2️⃣ Create IAM policy for EBS CSI driver
+Download the AWS-managed policy:
+```
+curl -o ebs-csi-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-ebs-csi-driver/master/docs/example-iam-policy.json
+```
+Create the policy in IAM:
+```
+aws iam create-policy \
+  --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
+  --policy-document file://ebs-csi-policy.json
+```
+* ### 3️⃣ Create IAM service account for the CSI driver
+```
+eksctl create iamserviceaccount \
+  --cluster demoCluster \
+  --namespace kube-system \
+  --name ebs-csi-controller-sa \
+  --attach-policy-arn arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:policy/AmazonEKS_EBS_CSI_Driver_Policy \
+  --approve \
+  --region us-east-1
+```
+* ### 4️⃣ Re-deploy / Restart the EBS CSI driver
+If you installed it as an EKS add-on, just update:
+```
+eksctl create addon --name aws-ebs-csi-driver --cluster demoCluster --region us-east-1 --force
+```
+
+If you installed via Helm, patch the deployment to use the new service account:
+
+```
+kubectl -n kube-system set serviceaccount deployment ebs-csi-controller ebs-csi-controller-sa
+kubectl -n kube-system rollout restart deployment ebs-csi-controller
+```
+
+* ### 5️⃣ Re-try PVC
+Now delete and recreate the PVC/Pod:
+```
+kubectl delete pod pvc-pod
+kubectl delete pvc pvc
+kubectl apply -f pvc.yaml
+kubectl apply -f usePVCPod.yaml
+```
+
+## after i test 
+![OutPUt](./img/2025-08-27_21-22.png)
+
+### Check mount file
+```
+kubectl exec -it pvc-pod -- bash
+```
+![OutPut](./img/2025-08-27_21-24.png)
+
 
 
 * ### Volume Types (Plugins)
