@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafanaloki
+  labels:
+    app: grafanaloki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafanaloki
+  template:
+    metadata:
+      labels:
+        app: grafanaloki
+    spec:
+      containers:
+      - name: grafanaloki
+        image: grafana/loki:latest
+        ports:
+        - containerPort: 3100
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafanaloki
+  labels:
+    app: grafanaloki
+spec: 
+  type: NodePort
+  ports:
+  - port: 3100
+    targetPort: 3100
+    nodePort: 31002
+  selector:
+    app: grafanaloki
