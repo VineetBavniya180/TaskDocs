@@ -52,7 +52,7 @@ metadata:
 data:
   NODE_ENV: "production"
   PORT: "3000"
-  LOKI_HOST: "http://172.18.0.3:31002" 
+  LOKI_HOST: "http://172.18.0.2:31002" 
 
 
 
