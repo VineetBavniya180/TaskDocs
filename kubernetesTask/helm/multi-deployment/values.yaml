@@ -1,0 +1,128 @@
+Deployment:
+  - replicas: 1
+    name: grafanaloki
+    image:
+      repository: grafana/loki
+      tag: latest
+    containerPort: 3100
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+  #### 
+  - replicas: 1
+    name: mysql
+    image:
+      repository: mysql
+      tag: latest
+    containerPort: 3306
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+    #$###
+  - replicas: 1
+    name: front
+    image:
+      repository: row101/dbtest
+      tag: v1
+    containerPort: 3000
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+  ###
+  - replicas: 1
+    name: promethues
+    image:
+      repository: prom/prometheus
+      tag: latest
+    containerPort: 9090
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+### 
+  - replicas: 1
+    name: grafana
+    image:
+      repository: grafana/grafana
+      tag: latest
+    containerPort: 3000
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+
+
+
+services:
+  - name: grafanaloki-service
+    selector: grafanaloki
+    type: NodePort
+    port: 3000
+    targetPort: 3000
+    nodePort: 31002
+###
+  - name: mysql-service
+    selector: mysql
+    type: NodePort
+    port: 3306
+    targetPort: 3306
+    nodePort: 31003
+###
+  - name: front-service
+    selector: front
+    type: NodePort
+    port: 3000
+    targetPort: 3000
+    nodePort: 31004
+### 
+  - name: mysql-service
+    selector: mysql
+    type: NodePort
+    port: 3306
+    targetPort: 3306
+    nodePort: 31005
+### 
+  - name: promethues-service
+    selector: promethues
+    type: NodePort
+    port: 9090
+    targetPort: 9090
+    nodePort: 31006
+###
+  - name: grafana-service
+    selector: grafana
+    type: NodePort
+    port: 3000
+    targetPort: 3000
+    nodePort: 31007
+
+
+
+mysql:
+  auth:
+    existingSecret: my-mysql-secret
+
+front:
+  existingSecret: my-front-secret
+
+prometheus:
+  existingConfigMap: ""
+

@@ -1,0 +1,43 @@
+deployment:
+  - name: my-app-nginx
+    replicas: 1
+    image:
+      repository: nginx
+      tag: latest
+    containerPort: 80
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+  - name: my-app-distroless
+    replicas: 1
+    image:
+      repository: raw101/distroless
+      tag: latest
+    containerPort: 3000
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+
+  
+
+service:
+  - name: my-nginx-service
+    selector: my-app-nginx
+    type: NodePort
+    port: 8080
+    targetPort: 80
+    nodePort: null  # Set a specific node port or leave as null for automatic assignment
+  - name: my-distroless-service
+    selector: my-app-distroless
+    type: NodePort
+    port: 9090
+    targetPort: 3000
+    nodePort: null  # Set a specific node port or leave as null for automatic assignment

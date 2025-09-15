@@ -1,0 +1,234 @@
+What is CI/CD ?
+What is CI ?
+What is CD ?
+
+Test Driven Development 
+
+* System Configuration
+
+* How to Setup Notification in Jenkins.
+
+* How to integrade with Docker, kubernetest, github action and AWS.
+* How to Run Freestyle Job to deploy projects.
+* How to make pipelines Declarative and Scripted.
+
+
+* Setting Up a Build Agent.
+    * create ssh key 
+    * put here /var/lib/jenkins/.ssh/authorize_keys 
+    * install java handless 
+    * go back to jenkins master to setup 
+    * copy rsa.private key and create cred 
+`````````````````````````
+````````````
+agent -: 
+sudo mkdir /var/lib/jenkins
+sudo useradd -d /var/lib/jenkins jenkins
+sudo chown -R jenkins:jenkins /var/lib/jenkins
+
+
+master -: 
+
+````````````````
+==========> 9 Sep <=========== learn
+* Configuration Build 
+* setup scm in Build
+* Tesing and test Reports 
+* Building git with jenkins
+* artifact and fingerprint 
+* Linking Jobs 
+* Job Automation 
+
+* using the jenkins api 
+* using the jenkins cli 
+
+
+-> Jenkins pipeline
+* pipeline Jobs run basic pipeline
+* The Blue Ocean editor 
+* Scripted vs Declarative pipeline 
+    * Scripted pipeline -> we can use logic. start with node {}
+    * Declarative pipeline -> we can not use logic.start with pipeline {}
+* Groovy Vs DSL
+    * Groovy -> is a programming langauage 
+    * DSL -> is a domain specific langauage 
+* Automation pipeline
+    * Jenkinsfile Basic 
+    * pipeline Trigger -> we can trigger pipeline by webhook, cron, other job etc.
+    * multi branch pipeline => 
+       * How to setup webhook in multi branch pipeline 
+        * use this function 
+        * trigger {
+            githubPush() # 
+        }
+
+* Adavanced Jenkinsfile 
+    * Global Libraries -> @Libraries() _
+        * Folder Level Libraries - >  @Libraries() _ , more secure compare to Global Libraries
+        * Global Level Libraries ->     they don't run on sandbox 
+    * Variable and Credential 
+        * Variable to decleare 
+            ronment {
+                var='value' # inside the stage block it called local Variable.
+            }
+
+* How to Use Docker with Jenkins.
+    * install Docker on master node 
+    *  we neet plugins  -> docker , docker pipeline . docker comman.
+
+
+Updates -:
+Learning -: 
+learn about Variable(global and local) and Credential.
+learn about Jenkinsfile Basic.
+learn about plugins.
+Use Declarative pipeline and run Basic pipelines on jenkins.
+Run docker agent thought the pipeline.
+pipeline Trigger using webhook.
+
+
+
+===> Today <===
+build benji 
+jenkins upstream and downstream
+ARM and AMD 
+Jenkins upgrade 
+------><-----------
+Linking multiple Freestyle pipeline upstream and downstream.
+Jenkins integration with docker,kubernetest,EKS,ECR. -> connect with RDS. 
+use to deploy local, dev,prod,test.
+
+* Linking Jobs -> Freestyle job provide durabilty.
+ link job 
+    * f1 -> f2 -> f3 .
+
+
+
+
+
+* 
+Updates -:
+Learning -:  
+Worked on setting up Docker login and push through Jenkins freestyle jobs.
+Added Docker Hub credentials into Jenkins using Username with Password type.
+General Meeting -: 
+Connected with @Nikhil sir for the inpowered overview.
+Connected with @Harshal sir regarding Jenkins-related issues(Variable pass to Jobs).
+
+
+
+user -: admin
+pass -: admin123 
+
+DB_HOST=localhost
+DB_USER=admin
+DB_PASS=admin123
+DB_NAME=db
+
+docker run -d -p 3000:3000 \
+-e DB_HOST="database-1.cex28aeu05yi.us-east-1.rds.amazonaws.com" \
+-e DB_PASS="admin123" \
+-e DB_USER="admin" \
+-e DB_NAME="db" \
+raw101/testdb:local
+
+curl -X POST http://localhost:3000/users \
+   -H "Content-Type: application/json" \
+   -d '{"username":"vineet","password":"12345"}'
+
+curl http://localhost:3000/users
+
+
+// codepiline 
+Qujiwu@cyclelove.cc123
+i have 3 exiting vpc and i create new vpc and peering with exiting vpc all these propese doing by terrform. terraform code on codecommit, Codepipeline will run and create this resources
+
+
+=========>Today<======Sep12 
+
+* Persmission 
+-> Overview Of Security  
+    -> Authentication
+    -> Authorization 
+-> Matrix Based Security
+-> Folder Used for Persmission
+-> Role and Groups
+
+=== Lab apply ===
+-> fronted Folder
+    -> Tom => Full Control 
+    -> Lisa => No Access 
+    -> Diane => View read 
+
+-> Backend Folder
+    -> Tom -> No Access 
+    -> Lisa => Full Control
+    -> Diane -> View read
+
+===>END<=====
+
+* Configuration
+-> Creadentails
+    -> plugins -> Creadentails Building Plugin 
+    -> Configure Credential Provider  -> to use for change Creadentails Scope. [Folder, Jenkins, User] Credential Provider.
+-> Views
+    -> prod, dev, deploy // remmanning 
+-> Agent Account
+    == jenkins server ===
+    -> ssh into jenkins server 
+    -> ls -l /var/lib/jenkins to check ssh Folder 
+    -> jenkins server -> ssh to the jagent > exit -> to generate know_host file 
+    -> generate ssh key 
+    -> ssh-copy-id agent@ip 
+    === jagent ===
+    Zaq1Xsw2
+
+-> Updates And Maintenance 
+    -< Upgrading Jenkins >-
+    
+    jenkins.war file is running jenkins.
+    ls -l /usr/lib/jenkins 
+    cp for backup 
+    cp /usr/lib/jenkins/jenkins.war ./jenkins.war.bak 
+    cp ./jenkins.war /usr/lib/jenkins/jenkins.war 
+    restart jenkins
+    replace jenkins.war file to accouding to java version to upgrade jenkins verison .
+    
+    -< Backing Up Jenkins >-
+    http://jenkins:8080/safeExit stop jenkins 
+    tar -xfz /var/lib/jenkins/ jenkins.bak.tar 
+    and restart jenkins 
+
+
+    -< Agent >- 
+-> Notification and Alerts
+    -< Email >- 
+    -< Alerts >- 
+    -< Logging >-
+    /var/log/jenkins.log 
+//////////////
+create jenkins agent node 
+upgrade jenkins version 
+Matrix Based Security, Folder Used for Persmission, Role and Groups
+
+
+
+
+========END==========
+
+
+Can you please start two temporary machines in the region closest to this location, and share a screenshot of the ping, please?
+
+US West
+Hillsboro OR 97124
+USW: 192.208.222.110
+
+US East
+Reston, VA 20191
+USE: 69.194.240.11
+
+[3:34 AM]
+I guess the regions we should choose are:
+Hillsboro, OR → San Jose (us-sanjose-1)
+Reston, VA → Ashburn (us-ashburn-1)
+But please double-check this.

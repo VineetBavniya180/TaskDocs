@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distroless
+  labels:
+    app: distroless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: distroless
+  template:
+    metadata:
+      labels:
+        app: distroless
+    spec:
+      containers:
+        - name: distroless
+          image: raw101/dbtest:v1 
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          envFrom:
+            - configMapRef:
+                name: distroless-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distroless
+  labels:
+    app: distroless
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 31001
+  selector:
+    app: distroless
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: distroless-config
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  LOKI_HOST: "http://172.18.0.2:31002"
+  DB_HOST: 172.18.0.2
+  DB_NAME: db
+  DB_USER: admin
+  DB_PASS: admin123
+
